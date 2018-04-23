@@ -1,6 +1,7 @@
 #include "ergosplit.h"
 #include "action_layer.h"
 #include "eeconfig.h"
+#include "keymap_german.h"
 
 extern keymap_config_t keymap_config;
 
@@ -25,23 +26,23 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
  * ,-----------------------------------------,                ,-----------------------------------------.
- * | Esc  |   1  |   2  |   3  |   4  |   5  |                |   6  |   7  |   8  |   9  |   0  | Bksp |
+ * | Esc  |   1  |   2  |   3  |   4  |   5  |                |   6  |   7  |   8  |   9  |   0  | PgUp |
  * |------+------+------+------+------+-------                -------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   E  |   R  |   T  |                |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |                |   Y  |   U  |   I  |   O  |   P  |   Ü  |
  * |------+------+------+------+------+-------                -------+------+------+------+------+------|
- * | F5   |   A  |   S  |   D  |   F  |   G  |                |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * | F5   |   A  |   S  |   D  |   F  |   G  |                |   H  |   J  |   K  |   L  |   Ö  |  Ä   |
  * |------+------+------+------+------+------|------,  ,----  -------+------+------+------+------+------|
- * | <>|  |   Z  |   X  |   C  |   V  |   B  |Lower |  | Raise|   N  |   M  |   ,  |   .  |   /  |Enter |
+ * | <>|  |   Z  |   X  |   C  |   V  |   B  | Win |  | AltGr |   N  |   M  |   ,  |   .  |  -_  | PgDn |
  * |------+------+------+------+------+------|-------  --------------+------+------+------+------+------|
- * |  F1  | Ctrl | Alt  | GUI  | Shift|      | Ctrl |  |  Spc |      | Lower| Left | Down |  Up  |Right |
+ * |  F1  | Ctrl | Alt  | Lower| Raise|      | Shift|  |  Spc |      | BckSp| Del  |  F10 |  F11 |  F12 |
  * `------------------------------------------------'  '------------------------------------------------'
  */
 [_QWERTY] = LAYOUT(
-   KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Z,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-   KC_F5,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                       KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-   KC_NUBS, KC_Y,    KC_X,    KC_C,    KC_V,    KC_B, LOWER,    RAISE,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT , \
-   KC_F1,  KC_LCTL, KC_LALT, KC_LGUI, KC_LSHIFT,   KC_LCTRL,    KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
+   KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,   KC_7,    KC_8,    KC_9,     KC_0,    KC_PGUP, \
+   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Z,   KC_U,    KC_I,    KC_O,     KC_P,    DE_UE, \
+   KC_F5,  KC_A,     KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,   KC_J,    KC_K,    KC_L,     DE_OE,   DE_AE, \
+   DE_LESS, KC_Y,    KC_X,    KC_C,    KC_V,    KC_B,  KC_LGUI,   DE_ALGR,    KC_N,   KC_M,    DE_SCLN, DE_COLN,  DE_UNDS, KC_PGDN , \
+   KC_F1,  KC_LCTL, KC_LALT,  LOWER,   RAISE,        KC_LSFT,        KC_SPACE,         KC_BSPC,  KC_DEL,  KC_F10,   KC_F11,  KC_F12  \
 ),
 
 /* Lower
@@ -58,11 +59,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `------------------------------------------------'  '------------------------------------------------'
  */
 [_LOWER] = LAYOUT(
-   KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Z,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-   KC_F5,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                       KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-   KC_NUBS, KC_Y,    KC_X,    KC_C,    KC_V,    KC_B, LOWER,    RAISE,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT , \
-   KC_F1,  KC_LCTL, KC_LALT, KC_LGUI, KC_LSHIFT,   KC_LCTRL,    KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
+   KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,   KC_7,    KC_8,    KC_9,     KC_0,    KC_PGUP, \
+   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Z,   KC_U,    KC_I,    KC_O,     KC_P,    DE_UE, \
+   KC_F5,  KC_A,     KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,   KC_J,    KC_K,    KC_L,     DE_OE,   DE_AE, \
+   DE_LESS, KC_Y,    KC_X,    KC_C,    KC_V,    KC_B,  KC_LGUI,   DE_ALGR,    KC_N,   KC_M,    DE_SCLN, DE_COLN,  DE_UNDS, KC_PGDN , \
+   KC_F1,  KC_LCTL, KC_LALT,  LOWER,   RAISE,        KC_LSFT,        KC_1,         KC_2,  KC_3,  KC_4,   KC_5,  KC_6  \
 ),
 
 /* Lower
@@ -99,11 +100,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `------------------------------------------------'  '------------------------------------------------'
  */
 [_RAISE] = LAYOUT(
-   KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Z,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC, \
-   KC_F5,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                       KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
-   KC_NUBS, KC_Y,    KC_X,    KC_C,    KC_V,    KC_B, LOWER,    RAISE,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT , \
-   KC_F1,  KC_LCTL, KC_LALT, KC_LGUI, KC_LSHIFT,   KC_LCTRL,    KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
+   RESET,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,   KC_7,    KC_8,    KC_9,     KC_0,    KC_PGUP, \
+   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Z,   KC_U,    KC_I,    KC_O,     KC_P,    DE_UE, \
+   KC_F5,  KC_A,     KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,   KC_J,    KC_K,    KC_L,     DE_OE,   DE_AE, \
+   DE_LESS, KC_Y,    KC_X,    KC_C,    KC_V,    KC_B,  KC_LGUI,   DE_ALGR,    KC_N,   KC_M,    DE_SCLN, DE_COLN,  DE_UNDS, KC_PGDN , \
+   KC_F1,  KC_LCTL, KC_LALT,  LOWER,   RAISE,        KC_LSFT,        KC_SPC,         KC_BSPC,  KC_DEL,  KC_F10,   KC_F11,  KC_F12  \
 )
 
 /* Raise
@@ -139,9 +140,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_qwerty);
-        #endif
         persistent_default_layer_set(1UL<<_QWERTY);
       }
       return false;
@@ -149,20 +147,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
-        //update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
         layer_off(_LOWER);
-        //update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
       break;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
-        //update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
         layer_off(_RAISE);
-        //update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
       break;

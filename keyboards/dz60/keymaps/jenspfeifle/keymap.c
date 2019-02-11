@@ -194,32 +194,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // layer-activated RGB underglow
 
-void matrix_scan_user(void) {
+// gets called each time layers get changed
+uint32_t layer_state_set_user(uint32_t state) {
 
   #ifdef RGBLIGHT_ENABLE
-
-  static uint8_t old_layer = 1;
-  uint8_t new_layer = biton32(layer_state);
-
-  if (old_layer != new_layer) {
-    switch (new_layer) {
-      case BL:
-          RGB_BL_MODE;
-          RGB_BL_LIGHT;
-        break;
-      case FL:
-          RGB_FL_MODE;
-          RGB_FL_LIGHT;
-        break;
-      case NL:
-          RGB_NL_MODE;
-          RGB_NL_LIGHT;
-        break;
-    }
-
-    old_layer = new_layer;
+  switch (biton32(state)) {
+    case FL:
+      RGB_FL_MODE;
+      RGB_FL_LIGHT;
+      break;
+    case NL:
+      RGB_NL_MODE;
+      RGB_NL_LIGHT;
+      break;
+    default: //default layer or any undefined layers
+      RGB_BL_MODE;
+      RGB_BL_LIGHT;
+      break;
   }
-
   #endif //RGBLIGHT_ENABLE
 
+  return state;
 }

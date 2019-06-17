@@ -24,11 +24,12 @@
 * and just use numbers.
 *
 */
-#define BL  0     // Base Layer
-#define LQW 1     // Shift Training Wheels
-#define RQW 2     // Shift Training Wheels
-#define FL  3     // Function Layer
-#define NL  4     // Numpad Layer
+#define BL    0     // Base Layer
+#define LQW   1     // Shift Training Wheels
+#define RQW   2     // Shift Training Wheels
+#define FL    3     // Function Layer
+#define NL    4     // Numpad Layer
+#define GAME  5     // Game Layer
 
 // rgb mode for BL layer
 #define RGB_BL_MODE    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT)
@@ -44,7 +45,11 @@
 #define RGB_NL_MODE    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT)
 //rgb light for NL layer
 #define RGB_NL_LIGHT   rgblight_sethsv_noeeprom_red()
-
+//
+// rgb mode for GAME layer
+#define RGB_GAME_MODE    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT)
+//rgb light for GAME layer
+#define RGB_GAME_LIGHT   rgblight_sethsv_noeeprom_yellow()
 // Row 1: 15 keys
 // Row 2: 13 keys
 // Row 3: 14 keys
@@ -62,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------------------------------------------------------     |
    * | Caps  | a | s | d | f | g | h | j | k | l | ; | ' | # |   |
    * |-----------------------------------------------------------|
-   * |Shft   | z | x | c | v | b | n | m | , | . | / | Shift |   |
+   * |Shft   | z | x | c | v | b | n | m | , | . | / | Shft |GAME|
    * |-----------------------------------------------------------|
    * |Ctrl|Gui |Alt |  BSPC  | FN |  Space  |Alt |Gui | NL |Ctrl |
    * `-----------------------------------------------------------'
@@ -72,8 +77,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	    KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_6,      KC_7,      KC_8,      KC_9,      KC_0,      KC_MINS,   KC_EQL,    KC_BSPC, KC_DEL,
       KC_TAB ,   KC_Q,      KC_W,      KC_E,      KC_R,      KC_T,      KC_Y,      KC_U,      KC_I,      KC_O,      KC_P,      KC_LBRC,   KC_RBRC,
   LCTL_T(KC_ENT),KC_A,      KC_S,      KC_D,      KC_F,      KC_G,      KC_H,      KC_J,      KC_K,      KC_L,      KC_SCLN,   KC_QUOT,   KC_NUHS,   KC_ENT,
-      KC_LSPO,   KC_Z,      KC_X,      KC_C,      KC_V,      KC_B,      KC_N,      KC_M,      KC_COMM,   KC_DOT,    KC_SLSH,   KC_RSPC,   RESET,
-      KC_LCTL,   KC_LGUI,   KC_LALT,   KC_BSPC,   MO(FL),    KC_SPC,   TO(NL),     KC_LEFT,   KC_DOWN,   KC_UP,     KC_RIGHT),
+      KC_LSPO,   KC_Z,      KC_X,      KC_C,      KC_V,      KC_B,      KC_N,      KC_M,      KC_COMM,   KC_DOT,    KC_SLSH,   KC_RSPC,   TG(GAME),
+      _______,   KC_LGUI,   KC_LALT,   KC_BSPC,   MO(FL),    KC_SPC,   TO(NL),     KC_LEFT,   KC_DOWN,   KC_UP,     KC_RIGHT),
 
   /* Keymap FL: Function Layer
    *
@@ -136,8 +141,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	    TG(NL),    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_6,      KC_7,      KC_8,      KC_9,      KC_0,      KC_MINS,   KC_EQL,    _______, _______,
       _______,   KC_4,      KC_5,      KC_6,      KC_PAST,   KC_PSLS,   _______,   KC_4,      KC_5,      KC_6,      KC_PAST,   KC_PSLS,   _______,
       _______,   KC_7,      KC_8,      KC_9,      KC_PPLS,   KC_PMNS,   _______,   KC_1,      KC_2,      KC_3,      KC_PPLS,   KC_PMNS,   _______,   _______,
-      _______,   KC_0,      KC_COMM,   KC_DOT,    KC_EQL,    _______,   _______,   _______,   KC_0,      KC_COMM,   KC_DOT,    KC_EQL,    _______,
+      _______,   KC_0,      KC_COMM,   KC_DOT,    KC_EQL,    _______,   _______,   _______,   KC_0,      KC_COMM,   KC_DOT,    KC_EQL,    RESET,
       _______,   _______,   _______,   _______,   MO(FL),    _______,   TG(NL),    _______,   _______,   _______,    _______),
+
+   [GAME] = LAYOUT_60_ansi_split_iso_enter(
+	//  1          2          3          4          5          6          7          8          9          10         11         12         13         14         15
+	    KC_ESC,    KC_1,      KC_2,      KC_3,      KC_4,      KC_5,      KC_6,      KC_7,      KC_8,      KC_9,      KC_0,      KC_MINS,   KC_EQL,    KC_BSPC, KC_DEL,
+      KC_TAB ,   KC_Q,      KC_W,      KC_E,      KC_R,      KC_T,      KC_Y,      KC_U,      KC_I,      KC_O,      KC_P,      KC_LBRC,   KC_RBRC,
+  LCTL_T(KC_ENT),KC_A,      KC_S,      KC_D,      KC_F,      KC_G,      KC_H,      KC_J,      KC_K,      KC_L,      KC_SCLN,   KC_QUOT,   KC_NUHS,   KC_ENT,
+      KC_LSPO,   KC_Z,      KC_X,      KC_C,      KC_V,      KC_B,      KC_N,      KC_M,      KC_COMM,   KC_DOT,    KC_SLSH,   KC_RSPC,   TG(GAME),
+      KC_LCTL,   KC_LGUI,   KC_LALT,   KC_SPC,   MO(FL),    KC_SPC,   TO(NL),     KC_LEFT,   KC_DOWN,   KC_UP,     KC_RIGHT),
 };
 
 
@@ -206,6 +219,10 @@ uint32_t layer_state_set_user(uint32_t state) {
     case NL:
       RGB_NL_MODE;
       RGB_NL_LIGHT;
+      break;
+    case GAME:
+      RGB_GAME_MODE;
+      RGB_GAME_LIGHT;
       break;
     default: //default layer or any undefined layers
       RGB_BL_MODE;

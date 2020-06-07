@@ -1,4 +1,5 @@
-/* Copyright 2019 Jens Pfeifle
+
+/* Copyright 2020 Jens Pfeifle
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,3 +53,39 @@ const uint32_t PROGMEM unicode_map[] = {
 #define RGB_DEFAULT_MODE    rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_MOOD)
 //rgb light
 #define RGB_DEFAULT_LIGHT   rgblight_setrgb(0,0,0)
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+__KEYMAP_GOES_HERE__
+};
+
+void matrix_init_user(){
+    // unicode input mode
+    set_unicode_input_mode(UC_LNX);
+    // lighting
+    RGB_DEFAULT_MODE;
+    RGB_DEFAULT_LIGHT;
+
+  // set numlock to "on" by default
+  if (!(host_keyboard_leds() & (1<<USB_LED_NUM_LOCK))) {
+      register_code(KC_NUMLOCK);
+      unregister_code(KC_NUMLOCK);
+  }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case UNI_LNX:
+            set_unicode_input_mode(UC_LNX);
+            return false;
+            break;
+        case UNI_WIN:
+            set_unicode_input_mode(UC_WINC);
+            return false;
+            break;
+        case UNI_MAC:
+            set_unicode_input_mode(UC_OSX);
+            return false;
+            break;
+    }
+    return true;
+}

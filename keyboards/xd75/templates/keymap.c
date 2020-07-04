@@ -21,6 +21,9 @@
 #define ________ KC_TRNS
 #define ___xx___ KC_NO
 
+// 2 taps to lock layer
+#define TAPPING_TOGGLE 2
+
 enum my_ucis {
     UNI_LNX,
     UNI_MAC,

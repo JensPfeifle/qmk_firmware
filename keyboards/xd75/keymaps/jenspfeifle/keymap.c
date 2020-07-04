@@ -21,6 +21,9 @@
 #define ________ KC_TRNS
 #define ___xx___ KC_NO
 
+// 2 taps to lock layer
+#define TAPPING_TOGGLE 2
+
 enum my_ucis {
     UNI_LNX,
     UNI_MAC,
@@ -55,23 +58,23 @@ const uint32_t PROGMEM unicode_map[] = {
 #define RGB_DEFAULT_LIGHT   rgblight_setrgb(0,0,0)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT_ortho_5x15(    KC_GRV     , KC_1 ,  KC_2  ,  KC_3  , KC_4 ,  KC_5 , ___xx___,  KC_DEL , ___xx___,  KC_6 ,  KC_7  ,  KC_8  ,  KC_9 ,  KC_0  ,    ___xx___    ,
-                                KC_ESC     , KC_Q ,  KC_W  ,  KC_E  , KC_R ,  KC_T , ___xx___, KC_PGUP , ___xx___,  KC_Y ,  KC_U  ,  KC_I  ,  KC_O ,  KC_P  ,     KC_QUOT    ,
-                            LCTL_T(KC_LCBR), KC_A ,  KC_S  ,  KC_D  , KC_F ,  KC_G , ___xx___, KC_PGDN , ___xx___,  KC_H ,  KC_J  ,  KC_K  ,  KC_L , KC_SCLN, RCTL_T(KC_RCBR),
-                                KC_LSPO    , KC_Z ,  KC_X  ,  KC_C  , KC_V ,  KC_B , ___xx___, ___xx___, ___xx___,  KC_N ,  KC_M  , KC_COMM, KC_DOT, KC_SLSH,     KC_RSPC    ,
-                                KC_LCTL    , MO(3), KC_LGUI, KC_LALT, MO(2), KC_ENT, KC_LGUI , ___xx___,  MO(1)  , KC_SPC, KC_BSPC,  KC_F5 , KC_F10, KC_F11 ,  LSFT(KC_F11)  ),
-    [1] = LAYOUT_ortho_5x15(___xx___,  ___xx___ , ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,   ___xx___   ,   ___xx___   ,   ___xx___   ,  ___xx___  ,   ___xx___   ,  ___xx___ , ___xx___,
-                            ___xx___, SGUI(KC_Q), ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, LGUI(KC_BSPC),  LGUI(KC_1)  ,  LGUI(KC_2)  , LGUI(KC_3) ,  LGUI(KC_4)  , LGUI(KC_5), ___xx___,
-                            ___xx___,  ___xx___ , ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,   ___xx___   , LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_UP), LGUI(KC_RGHT),  ___xx___ , ___xx___,
-                            KC_LSFT ,  ___xx___ , ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,   ___xx___   ,  LGUI(KC_6)  ,  LGUI(KC_7)  , LGUI(KC_8) ,  LGUI(KC_9)  , LGUI(KC_0), KC_RSFT ,
-                            KC_LCTL ,  KC_TRNS  , ___xx___, ___xx___, KC_TRNS , ___xx___, ___xx___, ___xx___,    KC_TRNS   ,   ___xx___   ,   ___xx___   ,  ___xx___  ,   ___xx___   ,  ___xx___ , ___xx___),
-    [2] = LAYOUT_ortho_5x15( KC_ESC ,  KC_F1  ,     KC_F2    ,     KC_F3    ,  KC_F4  ,  KC_F5  ,  KC_P7  ,  KC_P8  ,  KC_P9 ,     KC_F6    ,     KC_F7    ,  KC_F8  ,     KC_F9    ,  KC_F10 , ___xx___,
-                             KC_TAB , ___xx___,   ___xx___   ,   ___xx___   , ___xx___, KC_PPLS ,  KC_P4  ,  KC_P5  ,  KC_P6 , LSFT(KC_PGUP),    KC_PGDN   , KC_PGUP , LSFT(KC_PGDN), ___xx___, ___xx___,
-                            ___xx___, KC_HOME , LCTL(KC_LEFT), LCTL(KC_RGHT),  KC_END , KC_PAST ,  KC_P1  ,  KC_P2  ,  KC_P3 ,    KC_LEFT   ,    KC_DOWN   ,  KC_UP  ,    KC_RGHT   , ___xx___, ___xx___,
-                            ___xx___, ___xx___,   ___xx___   ,   ___xx___   , ___xx___, KC_PSLS ,  KC_P0  , KC_PDOT , KC_PENT,    KC_MINS   , LSFT(KC_MINS),  KC_EQL , LSFT(KC_EQL) , ___xx___, ___xx___,
-                            ___xx___, KC_TRNS ,   ___xx___   ,   ___xx___   , KC_TRNS , ___xx___, ___xx___, ___xx___, KC_TRNS,   ___xx___   ,   ___xx___   , ___xx___,   ___xx___   , ___xx___, ___xx___),
-    [3] = LAYOUT_ortho_5x15(___xx___, EEP_RST , ___xx___, ___xx___, ___xx___, ___xx___, RGB_SPI , RGB_TOG , RGB_SPD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
-                             RESET  , ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, RGB_VAI , RGB_MOD , RGB_VAD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
+    [0] = LAYOUT_ortho_5x15(    KC_ESC    , KC_1 ,  KC_2  ,  KC_3  , KC_4 ,  KC_5 ,   ___xx___   ,    KC_DEL   ,   ___xx___   ,  KC_6 ,  KC_7  ,  KC_8  ,  KC_9 ,  KC_0  ,    KC_GRV    ,
+                                KC_TAB    , KC_Q ,  KC_W  ,  KC_E  , KC_R ,  KC_T , LSFT(KC_LBRC),   KC_PGUP   , LSFT(KC_RBRC),  KC_Y ,  KC_U  ,  KC_I  ,  KC_O ,  KC_P  , LSFT(KC_QUOT),
+                            LCTL_T(KC_ESC), KC_A ,  KC_S  ,  KC_D  , KC_F ,  KC_G ,    KC_LBRC   ,   KC_PGDN   ,    KC_RBRC   ,  KC_H ,  KC_J  ,  KC_K  ,  KC_L , KC_SCLN,    KC_QUOT   ,
+                               KC_LSPO    , KC_Z ,  KC_X  ,  KC_C  , KC_V ,  KC_B ,  LSFT(KC_9)  ,   ___xx___  ,  LSFT(KC_0)  ,  KC_N ,  KC_M  , KC_COMM, KC_DOT, KC_SLSH,    KC_RSPC   ,
+                               KC_LCTL    , MO(3), KC_LGUI, KC_LALT, MO(1), KC_ENT,    KC_LGUI   , LSFT(KC_ENT),     TT(2)    , KC_SPC, KC_BSPC,  KC_F5 , KC_F10, KC_F11 , LSFT(KC_F11) ),
+    [1] = LAYOUT_ortho_5x15( SGUI(KC_Q)  ,     KC_F1    ,     KC_F2    ,    KC_F3   ,     KC_F4    ,    KC_F5    ,   ___xx___  , ___xx___, ___xx___,  KC_F6  ,  KC_F7  ,  KC_F8  ,  KC_F9  ,  KC_F10 ,  KC_F11 ,
+                            LGUI(KC_BSPC),  LGUI(KC_1)  ,  LGUI(KC_2)  , LGUI(KC_3) ,  LGUI(KC_4)  ,  LGUI(KC_5) , LGUI(KC_ENT), ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,  KC_F12 ,
+                            LCTL(KC_ESC) , LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_UP), LGUI(KC_RGHT), LGUI(KC_SPC),   ___xx___  , ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, KC_RCTL ,
+                               KC_LSFT   ,  LGUI(KC_6)  ,  LGUI(KC_7)  , LGUI(KC_8) ,  LGUI(KC_9)  ,  LGUI(KC_0) , SGUI(KC_ENT), ___xx___, ___xx___, ___xx___, KC_RSFT , ___xx___, ___xx___, ___xx___, KC_RSFT ,
+                               KC_LCTL   ,    KC_TRNS   ,   ___xx___   ,  ___xx___  ,    KC_TRNS   ,   ___xx___  ,   ___xx___  , ___xx___, KC_TRNS , ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___),
+    [2] = LAYOUT_ortho_5x15(___xx___,  KC_F1  ,  KC_F2  ,  KC_F3  ,  KC_F4  ,  KC_F5  ,  KC_P7  ,  KC_P8  ,  KC_P9 ,  KC_F6  ,     KC_F7    ,     KC_F8    ,    KC_F9    ,  KC_F10 ,  KC_F11 ,
+                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, KC_PPLS ,  KC_P4  ,  KC_P5  ,  KC_P6 , KC_HOME , LCTL(KC_LEFT), LCTL(KC_RGHT),    KC_END   , ___xx___,  KC_F12 ,
+                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, KC_PAST ,  KC_P1  ,  KC_P2  ,  KC_P3 , KC_LEFT ,    KC_DOWN   ,     KC_UP    ,   KC_RGHT   , ___xx___, ___xx___,
+                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, KC_PSLS ,  KC_P0  , KC_PDOT , KC_PENT, KC_MINS , LSFT(KC_MINS),    KC_EQL    , LSFT(KC_EQL), ___xx___, ___xx___,
+                            ___xx___, KC_TRNS , ___xx___, ___xx___, KC_TRNS , ___xx___, ___xx___, ___xx___, KC_TRNS, ___xx___,   ___xx___   ,   ___xx___   ,   ___xx___  , ___xx___, ___xx___),
+    [3] = LAYOUT_ortho_5x15( RESET  , EEP_RST , ___xx___, ___xx___, ___xx___, ___xx___, RGB_SPI , RGB_TOG , RGB_SPD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
+                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, RGB_VAI , RGB_MOD , RGB_VAD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
                             ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, RGB_HUI , RGB_RMOD, RGB_HUD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
                             ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, RGB_SAI , ___xx___, RGB_SAD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
                             ___xx___, KC_TRNS , ___xx___, ___xx___, KC_TRNS , ___xx___, ___xx___, ___xx___, KC_TRNS, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___)

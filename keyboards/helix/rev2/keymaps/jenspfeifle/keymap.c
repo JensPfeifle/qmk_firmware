@@ -39,6 +39,29 @@ enum macro_keycodes {
   KC_SAMPLEMACRO,
 };
 
+// unicode characters
+enum unicode_names {
+    UE,     // ü
+    UEU,    // Ü
+    AE,     // ä
+    AEU,    // Ä
+    OE,     // ö
+    OEU,    // Ö
+    SS,     // ß
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+    // use with X(i)
+    // shifted with XP(i,j)
+    [UE]  = 0x00FC,
+    [UEU] = 0x00DC,
+    [AE]  = 0x00E4,
+    [AEU] = 0x00C4,
+    [OE]  = 0x00F6,
+    [OEU] = 0x00D6,
+    [SS]  = 0x00DF
+};
+
 //Macros
 #define M_SAMPLE M(KC_SAMPLEMACRO)
 

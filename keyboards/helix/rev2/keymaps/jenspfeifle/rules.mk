@@ -19,3 +19,7 @@ LED_ANIMATIONS = yes        # LED animations
 # convert Helix-specific options (that represent combinations of standard options)
 #   into QMK standard options.
 include $(strip $(KEYBOARD_LOCAL_FEATURES_MK))
+
+# enable unicde map method for unicode characters
+# https://beta.docs.qmk.fm/using-qmk/software-features/feature_unicode
+UNICODEMAP_ENABLE = yes

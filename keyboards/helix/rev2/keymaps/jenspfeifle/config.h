@@ -20,11 +20,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-// place overrides here
+// Smaller RGB adjustment steps
+#undef RGBLIGHT_HUE_STEP
+#define RGBLIGHT_HUE_STEP 5 //def: 10
+#undef RGBLIGHT_SAT_STEP
+#define RGBLIGHT_SAT_STEP 5 //def: 17
 
-// If you need more program area, try select and reduce rgblight modes to use.
-
-// Selection of RGBLIGHT MODE to use.
+// Selection of RGBLIGHT MODE to enable.
 #if defined(LED_ANIMATIONS)
    #define RGBLIGHT_EFFECT_BREATHING
    #define RGBLIGHT_EFFECT_RAINBOW_MOOD

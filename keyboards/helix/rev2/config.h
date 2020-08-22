@@ -38,8 +38,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SERIAL_USE_MULTI_TRANSACTION
 
 /* Select hand configuration */
-#define MASTER_LEFT
-// #define MASTER_RIGHT
+//#define MASTER_LEFT
+ #define MASTER_RIGHT
 // #define EE_HANDS
 
 // Helix keyboard OLED support
@@ -159,4 +159,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_ONESHOT
 //#define NO_ACTION_MACRO
 //#define NO_ACTION_FUNCTION
-

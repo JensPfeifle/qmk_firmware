@@ -1,112 +1,138 @@
 
-/* Copyright 2020 Jens Pfeifle
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+/* Copyright 2020 Jens Pfeifle */
 
 #include QMK_KEYBOARD_H
-#include "keymap_german.h"
 
 #define ________ KC_TRNS
 #define ___xx___ KC_NO
 
-// 2 taps to lock layer
-#define TAPPING_TOGGLE 2
+// Each layer gets a name for readability, which is then used in the keymap matrix below.
+// The underscores don't mean anything - you can have a layer called STUFF or any other name.
+// Layer names don't all need to be of the same length, obviously, and you can also skip them
+// entirely and just use numbers.
+enum layer_number { _QWERTY = 0, _LOWER, _RAISE, _ADJUST };
 
-enum my_ucis {
-    UNI_LNX,
-    UNI_MAC,
-    UNI_WIN,
-};
+enum custom_keycodes { QWERTY = SAFE_RANGE, LOWER, RAISE, ADJUST, RGBRST };
 
+// unicode characters
 enum unicode_names {
-    UE,     // ü
-    UEU,    // Ü
-    AE,     // ä
-    AEU,    // Ä
-    OE,     // ö
-    OEU,    // Ö
-    SS,     // ß
+    UE,   // ü
+    UEU,  // Ü
+    AE,   // ä
+    AEU,  // Ä
+    OE,   // ö
+    OEU,  // Ö
+    SS,   // ß
+    SNEK  // 🐍
 };
 
 const uint32_t PROGMEM unicode_map[] = {
-    // use with X(i)
-    // shifted with XP(i,j)
-    [UE]  = 0x00FC,
-    [UEU] = 0x00DC,
-    [AE]  = 0x00E4,
-    [AEU] = 0x00C4,
-    [OE]  = 0x00F6,
-    [OEU] = 0x00D6,
-    [SS]  = 0x00DF
+    // use single character in keymap with X(i), or shifted with XP(i,j), where
+    // i and j are the mapping table indices of the lower and upper case
+    // character, respectively.
+    [UE]   = 0x00FC,  // ü
+    [UEU]  = 0x00DC,  // Ü
+    [AE]   = 0x00E4,  // ä
+    [AEU]  = 0x00C4,  // Ä
+    [OE]   = 0x00F6,  // ö
+    [OEU]  = 0x00D6,  // Ö
+    [SS]   = 0x00DF,  // ß
+    [SNEK] = 0x1F40   // 🐍
 };
-
-// rgb mode
-#define RGB_DEFAULT_MODE    rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_MOOD)
-//rgb light
-#define RGB_DEFAULT_LIGHT   rgblight_setrgb(0,0,0)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT_ortho_5x15(    KC_ESC    , KC_1 ,  KC_2  ,  KC_3  , KC_4 ,  KC_5 ,   ___xx___   ,    KC_DEL   ,   ___xx___   ,  KC_6 ,  KC_7  ,  KC_8  ,  KC_9 ,  KC_0  ,    KC_GRV    ,
-                                KC_TAB    , KC_Q ,  KC_W  ,  KC_E  , KC_R ,  KC_T , LSFT(KC_LBRC),   KC_PGUP   , LSFT(KC_RBRC),  KC_Y ,  KC_U  ,  KC_I  ,  KC_O ,  KC_P  , LSFT(KC_QUOT),
-                            LCTL_T(KC_ESC), KC_A ,  KC_S  ,  KC_D  , KC_F ,  KC_G ,    KC_LBRC   ,   KC_PGDN   ,    KC_RBRC   ,  KC_H ,  KC_J  ,  KC_K  ,  KC_L , KC_SCLN,    KC_QUOT   ,
-                               KC_LSPO    , KC_Z ,  KC_X  ,  KC_C  , KC_V ,  KC_B ,  LSFT(KC_9)  ,   ___xx___  ,  LSFT(KC_0)  ,  KC_N ,  KC_M  , KC_COMM, KC_DOT, KC_SLSH,    KC_RSPC   ,
-                               KC_LCTL    , MO(3), KC_LGUI, KC_LALT, MO(1), KC_ENT,    KC_LGUI   , LSFT(KC_ENT),     TT(2)    , KC_SPC, KC_BSPC,  KC_F5 , KC_F10, KC_F11 , LSFT(KC_F11) ),
-    [1] = LAYOUT_ortho_5x15( SGUI(KC_Q)  ,     KC_F1    ,     KC_F2    ,    KC_F3   ,     KC_F4    ,    KC_F5    ,   ___xx___  , ___xx___, ___xx___,  KC_F6  ,  KC_F7  ,  KC_F8  ,  KC_F9  ,  KC_F10 ,  KC_F11 ,
-                            LGUI(KC_BSPC),  LGUI(KC_1)  ,  LGUI(KC_2)  , LGUI(KC_3) ,  LGUI(KC_4)  ,  LGUI(KC_5) , LGUI(KC_ENT), ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,  KC_F12 ,
-                            LCTL(KC_ESC) , LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_UP), LGUI(KC_RGHT), LGUI(KC_SPC),   ___xx___  , ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, KC_RCTL ,
-                               KC_LSFT   ,  LGUI(KC_6)  ,  LGUI(KC_7)  , LGUI(KC_8) ,  LGUI(KC_9)  ,  LGUI(KC_0) , SGUI(KC_ENT), ___xx___, ___xx___, ___xx___, KC_RSFT , ___xx___, ___xx___, ___xx___, KC_RSFT ,
-                               KC_LCTL   ,    KC_TRNS   ,   ___xx___   ,  ___xx___  ,    KC_TRNS   ,   ___xx___  ,   ___xx___  , ___xx___, KC_TRNS , ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___),
-    [2] = LAYOUT_ortho_5x15(___xx___,  KC_F1  ,  KC_F2  ,  KC_F3  ,  KC_F4  ,  KC_F5  ,  KC_P7  ,  KC_P8  ,  KC_P9 ,  KC_F6  ,     KC_F7    ,     KC_F8    ,    KC_F9    ,  KC_F10 ,  KC_F11 ,
-                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, KC_PPLS ,  KC_P4  ,  KC_P5  ,  KC_P6 , KC_HOME , LCTL(KC_LEFT), LCTL(KC_RGHT),    KC_END   , ___xx___,  KC_F12 ,
-                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, KC_PAST ,  KC_P1  ,  KC_P2  ,  KC_P3 , KC_LEFT ,    KC_DOWN   ,     KC_UP    ,   KC_RGHT   , ___xx___, ___xx___,
-                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, KC_PSLS ,  KC_P0  , KC_PDOT , KC_PENT, KC_MINS , LSFT(KC_MINS),    KC_EQL    , LSFT(KC_EQL), ___xx___, ___xx___,
-                            ___xx___, KC_TRNS , ___xx___, ___xx___, KC_TRNS , ___xx___, ___xx___, ___xx___, KC_TRNS, ___xx___,   ___xx___   ,   ___xx___   ,   ___xx___  , ___xx___, ___xx___),
-    [3] = LAYOUT_ortho_5x15( RESET  , EEP_RST , ___xx___, ___xx___, ___xx___, ___xx___, RGB_SPI , RGB_TOG , RGB_SPD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
-                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, RGB_VAI , RGB_MOD , RGB_VAD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
-                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, RGB_HUI , RGB_RMOD, RGB_HUD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
-                            ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, RGB_SAI , ___xx___, RGB_SAD, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___,
-                            ___xx___, KC_TRNS , ___xx___, ___xx___, KC_TRNS , ___xx___, ___xx___, ___xx___, KC_TRNS, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___, ___xx___)
+
+  [_QWERTY] = LAYOUT_ortho_5x15( \
+      KC_ESC,          KC_1,    KC_2,    KC_3,    KC_4,    KC_5,   _______,  _______,_______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_GRV, \
+      KC_TAB,          KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,   _______,  _______,_______, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    LSFT(KC_QUOT), \
+      LCTL_T(KC_ESC),  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,   _______,  _______,_______, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, \
+      KC_LSPO,         KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_LBRC, _______,KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSPC , \
+      ADJUST,          KC_LCTL, KC_LGUI, KC_LALT, KC_LGUI, KC_ENT,  LOWER,   _______,RAISE,   KC_SPC,  KC_BSPC, _______, _______, _______, _______ \
+      ),
+
+  [_LOWER] = LAYOUT_ortho_5x15( \
+      _______, KC_F1,       KC_F2,   KC_F3,       KC_F4,       KC_F5,   _______, _______,  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11, \
+      KC_TILD, KC_EXLM,     KC_AT,   KC_HASH,     KC_DLR,      KC_PERC, _______, _______,  _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_F12, \
+      _______, XP(AE, AEU), X(SS),  XP(OE, OEU), XP(UE, UEU),  _______, _______, _______,  _______, _______, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, \
+      KC_CAPS, _______,     _______, _______,     _______,     _______, _______, _______, _______,  _______,  _______, _______, KC_HOME, KC_END,  _______, \
+      _______, _______,     _______, _______,     _______,     _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
+      ),
+
+  [_RAISE] = LAYOUT_ortho_5x15( \
+      _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,_______, _______, KC_F6,   KC_F7,         KC_F8,         KC_F9,        KC_F10,  KC_DEL, \
+      _______, _______, _______, _______, _______, _______, _______,_______, _______, KC_HOME, LCTL(KC_LEFT), LCTL(KC_RGHT), KC_END,       _______, KC_F12, \
+      _______, _______, _______, _______, _______, _______, _______,_______, _______, KC_LEFT, KC_DOWN,       KC_UP,         KC_RGHT,      _______, KC_BSLS, \
+      KC_CAPS, _______, _______, _______, _______, _______, _______, _______, _______, KC_MINS, KC_UNDS,       KC_EQL,        LSFT(KC_EQL), _______, _______, \
+      _______, _______, _______, _______, _______, _______, _______,_______, _______, _______, _______,       _______,       _______,      _______, _______ \
+      ),
+
+  [_ADJUST] =  LAYOUT_ortho_5x15( \
+      RESET,   RGBRST,  _______, _______, _______, _______,  _______,_______, _______,_______, _______, _______, _______, _______, _______, \
+      _______, _______, _______, _______, _______, _______, _______, _______,_______, _______, _______, _______, _______, _______, _______, \
+      _______, _______, _______, _______, _______, _______, _______, _______,_______, _______, QWERTY,  _______, _______, _______, _______, \
+      _______, _______, _______, _______, _______, _______, _______, _______,_______, _______, _______, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, \
+      _______, _______, _______, _______, _______, _______, _______, _______,_______, _______, _______, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD \
+      )
 };
 
-void matrix_init_user(){
-    // unicode input mode
-    set_unicode_input_mode(UC_LNX);
-    // lighting
-    RGB_DEFAULT_MODE;
-    RGB_DEFAULT_LIGHT;
 
-  // set numlock to "on" by default
-  if (!(host_keyboard_leds() & (1<<USB_LED_NUM_LOCK))) {
-      register_code(KC_NUMLOCK);
-      unregister_code(KC_NUMLOCK);
-  }
+void persistent_default_layer_set(uint16_t default_layer) {
+    eeconfig_update_default_layer(default_layer);
+    default_layer_set(default_layer);
+}
+
+// Setting ADJUST layer RGB back to default
+void activate_triple_layer(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
+    if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
+        layer_on(layer3);
+    } else {
+        layer_off(layer3);
+    }
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
-        case UNI_LNX:
-            set_unicode_input_mode(UC_LNX);
+    switch (keycode) {
+        case QWERTY:
+            if (record->event.pressed) {
+                persistent_default_layer_set(1UL << _QWERTY);
+            }
             return false;
             break;
-        case UNI_WIN:
-            set_unicode_input_mode(UC_WINC);
+        case LOWER:
+            if (record->event.pressed) {
+                layer_on(_LOWER);
+                activate_triple_layer(_LOWER, _RAISE, _ADJUST);
+            } else {
+                layer_off(_LOWER);
+                activate_triple_layer(_LOWER, _RAISE, _ADJUST);
+            }
             return false;
             break;
-        case UNI_MAC:
-            set_unicode_input_mode(UC_OSX);
+        case RAISE:
+            if (record->event.pressed) {
+                layer_on(_RAISE);
+                activate_triple_layer(_LOWER, _RAISE, _ADJUST);
+            } else {
+                layer_off(_RAISE);
+                activate_triple_layer(_LOWER, _RAISE, _ADJUST);
+            }
             return false;
+            break;
+        case ADJUST:
+            if (record->event.pressed) {
+                layer_on(_ADJUST);
+            } else {
+                layer_off(_ADJUST);
+            }
+            return false;
+            break;
+        case RGBRST:
+            #ifdef RGBLIGHT_ENABLE
+                if (record->event.pressed) {
+                    eeconfig_update_rgblight_default();
+                    rgblight_enable();
+                }
+            #endif
             break;
     }
     return true;
